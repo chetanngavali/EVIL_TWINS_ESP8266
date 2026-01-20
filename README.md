@@ -101,6 +101,9 @@ graph TD
     BtnBACK --> GND
 ```
 
+![Wiring Diagram](./wiring_diagram.png)
+*Figure 1: Visual Wiring Diagram*
+
 ---
 
 ## 🚀 Installation Guide
