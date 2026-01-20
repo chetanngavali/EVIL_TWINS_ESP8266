@@ -129,11 +129,33 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 **Author**: [@chetanngavali](https://github.com/chetanngavali)  
-**Portfolio**: https://chetanngavali.com.de  
-**Version**: 1.0 
+**Portfolio**: [chetanngavali.com.de](https://chetanngavali.com.de)  
+**Version**: 5.0
 
-## 📞 Contact Us
+## ⚡ Quick Flash Guide (No Coding Required)
+
+For users who want to deploy the tool without installing the Arduino IDE, we have included a standalone **Flasher Utility** for Windows.
+
+### Step 1: Launch the Flasher
+Navigate to the `ESP8266 Flasher Tool` directory included in this repository.
+*   **64-bit Windows**: Open `nodemcu-flasher-master/Win64/Release`
+*   **32-bit Windows**: Open `nodemcu-flasher-master/Win32/Release`
+*   Launch **`ESP8266Flasher.exe`**.
+
+### Step 2: Configure Firmware
+1.  Click on the **Config** tab at the top of the application.
+2.  Click the **Gear Icon** ⚙️ on the first line.
+3.  Browse and select the binary file: `BIN FILE/EVIL_TWINS_ESP8266.ino.bin`.
+
+### Step 3: Flash the Device
+1.  Connect your ESP8266 board via USB.
+2.  Return to the **Operation** tab.
+3.  Select the correct **COM Port** from the dropdown list.
+    *   *Note: If no port appears, ensure you have the CH340 or CP2102 drivers installed.*
+4.  Click the **Flash** button and wait for the progress bar to complete.
+
+---
+
+## 🤝 Contributing
 
 If you encounter any problems or need the source code files (`.ino`), please contact us directly.
-
-
