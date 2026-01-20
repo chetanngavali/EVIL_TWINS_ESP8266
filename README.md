@@ -98,7 +98,7 @@ Connect your components as follows. The buttons should connect the GPIO pin to G
 
 ### Method 2: Using Web Interface
 1.  Connect to the management WiFi:
-    *   **SSID**: `Evil_Twins`
+    *   **SSID**: `Evil_Twins` (or `Management` if attack was stopped previously)
     *   **Password**: `chetangavali`
 2.  Open a browser and go to: `http://192.168.4.1/menu`
 3.  Use the **Dashboard** to:
@@ -129,5 +129,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 **Author**: [@chetanngavali](https://github.com/chetanngavali)  
+**Portfolio**:(https://chetanngavali.com.de) 
 **Version**: 1.0
 
+## 📞 Contact Us
+
+If you encounter any problems or need the source code files (`.ino`), please contact us directly.
