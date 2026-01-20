@@ -129,10 +129,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 **Author**: [@chetanngavali](https://github.com/chetanngavali)  
-**Portfolio**: https://chetanngavali.com.de
+**Portfolio**: https://chetanngavali.com.de  
 **Version**: 1.0 
 
 ## 📞 Contact Us
 
 If you encounter any problems or need the source code files (`.ino`), please contact us directly.
+
 
