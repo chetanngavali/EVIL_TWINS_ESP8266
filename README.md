@@ -58,51 +58,13 @@ Connect your components as follows. The buttons should connect the GPIO pin to G
 
 > **Note**: Wiring may vary slightly depending on your specific board code definitions. Check `EVIL_TWINS_ESP8266.ino` lines 53-56 to confirm button pins.
 
-### 🖼️ Connection Diagram
+### 📸 Connection Photos
 
-```mermaid
-graph TD
-    subgraph ESP8266[ESP8266 NodeMCU]
-        D1[D1 / GPIO 5]
-        D2[D2 / GPIO 4]
-        D3[D3 / GPIO 0]
-        D6[D6 / GPIO 12]
-        D7[D7 / GPIO 13]
-        D5[D5 / GPIO 14]
-        GND[GND]
-        V3[3.3V]
-    end
+**OLED Display Connection**
+![OLED Connection](./ALL%20Connections/esp8266%20oled%20connection.png)
 
-    subgraph Peripherals
-        OLED[OLED Display]
-        BtnUP[Button UP]
-        BtnDOWN[Button DOWN]
-        BtnSEL[Button SELECT]
-        BtnBACK[Button BACK]
-    end
-
-    %% OLED Connections
-    D1 ==>|SDA| OLED
-    D2 ==>|SCL| OLED
-    V3 ==>|VCC| OLED
-    GND ==>|GND| OLED
-
-    %% Button Connections (Active LOW)
-    BtnUP --> D3
-    BtnUP --> GND
-    
-    BtnDOWN --> D6
-    BtnDOWN --> GND
-    
-    BtnSEL --> D7
-    BtnSEL --> GND
-    
-    BtnBACK --> D5
-    BtnBACK --> GND
-```
-
-![Wiring Diagram](./wiring_diagram.png)
-*Figure 1: Visual Wiring Diagram*
+**Buttons Connection**
+![Buttons Connection](./ALL%20Connections/esp8266%20Buttons%20Connections.png)
 
 ---
 
