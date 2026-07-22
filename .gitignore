@@ -1,0 +1,29 @@
+# === Firmware Compile Artifacts ===
+.pio/
+.pioenvs/
+.piolibdeps/
+build/
+dist/
+node_modules/
+bin/
+*.bin
+*.elf
+*.hex
+
+# === IDE Configurations ===
+.vscode/
+.idea/
+*.suo
+*.user
+*.workspace
+.clang-format
+
+# === Project Configurations & Local Secret Keys ===
+*.local.h
+config_local.h
+.env
+.env.local
+
+# === System Files ===
+.DS_Store
+Thumbs.db

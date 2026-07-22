@@ -1,120 +1,124 @@
 # 📡 ESP8266 Evil Twin - Network Security Simulation
 
-![Version](https://img.shields.io/badge/Version-5.0-blue)
-![Platform](https://img.shields.io/badge/Platform-ESP8266-orange)
-![License](https://img.shields.io/badge/License-MIT-green)
+[![Platform](https://img.shields.io/badge/Platform-ESP8266-orange.svg?style=for-the-badge&logo=espressif)](https://www.espressif.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![Firmware Version](https://img.shields.io/badge/Version-5.0_Final-blue.svg?style=for-the-badge)](CHANGELOG.md)
+[![Hardware](https://img.shields.io/badge/Hardware-SSD1306_OLED-brightgreen.svg?style=for-the-badge)](docs/ARCHITECTURE.md)
 
-A professional-grade Network Security Research Tool designed for the ESP8266 platform. This tool demonstrates the **Evil Twin Attack**—a sophisticated phishing technique used to capture WiFi passwords by mimicking legitimate access points.
-
----
-
-## 📌 1. About the Project
-
-The **ESP8266 Evil Twin** is an all-in-one hardware and software solution that combines a powerful backend logic with a premium, responsive web interface and a physical interaction system (OLED + Buttons). Unlike basic simulations, this project features **Real-time Password Verification**, ensuring that only correct credentials are logged.
-
-### 🌟 Key Features
-- **Modern Responsive UI**: Premium Dashboards with Dark/Light mode support.
-- **Physical Interface**: Full control via a 128x64 OLED display and 4 dedicated buttons.
-- **Smart Scanning**: Async WiFi scanning to identify and target local networks.
-- **Captive Portal**: Redirects victims to a realistic "Security Validation" page.
-- **Persistent Logging**: Stores captured credentials in the ESP8266's EEPROM (survives reboots).
-- **Auto-Stop Logic**: Automatically stops the attack and notifies the admin once a valid password is found.
-- **Enterprise Dashboard**: A centralized hub to manage scans, view real-time stats, and export logs.
+A professional-grade Network Security Research and Simulation Tool designed for the ESP8266 platform. This repository provides an all-in-one hardware and software simulation of the **Evil Twin Attack**—a classic phishing methodology used to demonstrate vulnerabilities in wireless clients and educate users on Wi-Fi security.
 
 ---
 
-## ⚙️ 2. How It Works (The Process)
+## 📌 What It Does
 
-The tool operates in a structured sequence to ensure a successful "simulated" attack:
+The **ESP8266 Evil Twin** demonstrates how rogue access points can impersonate legitimate networks to credential-harvest. Unlike basic captive portal scripts, this project features **Real-time Password Verification** by momentarily checking entered credentials against the target access point. If the credentials fail verification, the victim is prompted to re-enter them; if they succeed, they are persisted locally and the attack automatically stops.
 
-1.  **Scanning**: The admin initiates a scan (via Web or OLED). The ESP8266 switches to Station Mode briefly to sniff nearby SSIDs and their signal strengths (RSSI).
-2.  **Cloning**: Once a target is selected, the ESP8266 creates a Soft Access Point (AP) with the **exact same name (SSID)** as the target.
-3.  **Baiting**: Victims see an open network (or one with a known default password) and connect to it.
-4.  **Redirection**: A DNS server on the ESP8266 intercepts all web requests and redirects the victim to a hosted "Security Validation" portal (`192.168.4.1`).
-5.  **Deception**: The portal informs the user that a "security re-validation" is required for their network.
-6.  **Capture & Verify**: 
-    - The victim enters the password.
-    - The ESP8266 disconnects its server temporarily and attempts to connect to the **Actual Target Network** using the provided credentials.
-    - If connection succeeds (`WL_CONNECTED`), the password is verified as correct.
-7.  **Finalization**: If verified, the credentials are saved to EEPROM, and the attack stops. The victim is shown a "Success" page.
+This tool is designed for penetration testers, security educators, and students wanting to explore physical computing and cyber-security simulation on resource-constrained microcontrollers. It features both a physical control panel (OLED display + button controls) and a responsive web-based administration dashboard.
 
 ---
 
-## 🛠️ 3. Installation & Requirements
+## 🌟 Key Features
 
-### 💎 Hardware Needed
-- **Microcontroller**: ESP8266 (NodeMCU, Wemos D1 Mini, or generic ESP-12E).
-- **Display**: SSD1306 128x64 I2C OLED (Address `0x3C`).
-- **Input**: 4 Tactile Push Buttons (Up, Down, Select, Back).
-- **Connections**:
-    - **OLED**: SDA -> GPIO 5 (D1), SCL -> GPIO 4 (D2).
-    - **Buttons**: UP (D3), DOWN (D6), SELECT (D7), BACK (D5).
-
-### 🚀 Flashing via Binary (Recommended)
-
-To get started quickly without compiling code, follow these steps to flash the pre-compiled production binary:
-
-1.  **Binary Path**: `build/esp8266.esp8266.nodemcuv2/EVIL_TWINS_ESP8266.ino.bin`
-2.  **Flash Tool**: Use **NodeMCU PyFlasher** (GUI) or **esptool.py** (CLI).
-3.  **Download Settings**:
-    - **Board**: NodeMCU v2 (ESP-12E)
-    - **Flash Mode**: DIO
-    - **Baud Rate**: 115200
-    - **CPU Frequency**: 160MHz (recommended for better web UI performance)
-4.  **Steps**:
-    - Connect the ESP8266 to your PC via USB.
-    - Open your flashing tool and select the `.bin` file.
-    - Click **Flash** and wait for completion.
-    - Press the **Reset** button on the board after flashing.
+- **Real-time Verification:** Disconnects temporarily to test captured passwords against the actual target AP (`WL_CONNECTED`), ensuring zero "garbage" credentials.
+- **Physical Interface:** Supports a 128x64 I2C OLED display and a 4-button tactile interface (Up, Down, Select, Back) for independent, PC-free field operations.
+- **Responsive Admin Panel:** A clean web dashboard (`/menu`) featuring dark/light modes, live connection stats, target scanning, and credential log management.
+- **Persistent EEPROM Storage:** Captured logs are stored securely in the ESP8266's EEPROM and persist across system power cycles.
+- **Smart Hardware Optimization:** Uses asynchronous scanning and a 500ms button state debounce guard to keep the hardware responsive under CPU loads.
+- **Edge-Case Resilience:** Automatically handles DNS redirection for any address requested by connected clients, forcing them to the validation portal page.
 
 ---
 
-## 🖥️ 4. Web Interface & API
+## 🛠️ Tech Stack
 
-The tool exposes a powerful rest-based API and a premium web dashboard for control:
-
-- **Dashboard**: `http://192.168.4.1/menu` (Admin Hub)
-- **Scanning**: Initiates environmental WiFi analysis via background tasks.
-- **Stats**: Real-time tracking of connected victims and system state.
-- **Log Management**: Access and purge captured credentials directly from the browser.
-- **Capture Portal**: Advanced HTML5/CSS3 portal designed to mimic enterprise security gateways.
+- **Microcontroller Core:** C++ / Arduino Framework (ESP8266 Arduino Core)
+- **Web UI & Captive Portal:** Semantic HTML5, Vanilla CSS3 (Variables, Dark/Light theme support), and lightweight JavaScript
+- **Hardware Integration:** `Adafruit_SSD1306` & `Adafruit_GFX` libraries (I2C)
+- **Data Persistence:** Internal EEPROM emulation
 
 ---
 
-## 📖 5. Usage Guide
+## 📸 Media & Screenshots
 
-1.  **Power On**: You'll be greeted by the splash screen.
-2.  **Navigation**: Use the physical buttons to select "Scan Networks".
-3.  **Targeting**: Once scanning is complete, go to "Select Target" and pick a network.
-4.  **Execute**: Press "OK" to start the attack. The OLED will show "ATTACK IN PROGRESS".
-5.  **Monitoring**: Access `192.168.4.1/menu` from any device connected to the ESP8266's AP (`EVIL_TWINS_BY_CHETAN` or the cloned SSID) to see the dashboard.
-6.  **Capture**: When a victim enters a password, the OLED will show "Verifying...".
-7.  **Success**: If correct, the device stops automatically. You can view the password in the "Show Logs" menu or via the web portal.
+> [!NOTE]
+> Hardware schematics and physical interface references are available in the project directory.
+
+| OLED Display (Physical UI) | Admin Dashboard (`/menu`) | Captive Portal (Victim View) |
+|:---:|:---:|:---:|
+| ![OLED Interface Placement](evil_twins.png) | *[Capture: Web Admin Menu Dashboard]* | *[Capture: Responsive Mobile Captive Portal]* |
+
+---
+
+## 🔌 Hardware Schematics & Pin Mapping
+
+To build the standalone hardware unit, wire the components according to the diagram below.
+
+### 📐 Connections Diagram
+- Refer to [esp8266 oled connection.png](file:///e:/projects/IOT-SIMULATION/EVIL_TWINS_ESP8266/github/ALL%20Connections/esp8266%20oled%20connection.png) and [esp8266 Buttons Connections.png](file:///e:/projects/IOT-SIMULATION/EVIL_TWINS_ESP8266/github/ALL%20Connections/esp8266%20Buttons%20Connections.png) inside the `ALL Connections` directory for complete physical layouts.
+
+### 📌 Pinout Reference
+
+| Component | Pin (ESP8266 / NodeMCU) | GPIO Mapping | Notes |
+| :--- | :--- | :--- | :--- |
+| **OLED SDA** | D1 | GPIO 5 | I2C Data Line |
+| **OLED SCL** | D2 | GPIO 4 | I2C Clock Line |
+| **Button UP** | D3 | GPIO 0 | Navigation Up (Internal Pullup) |
+| **Button DOWN** | D6 | GPIO 12 | Navigation Down (Internal Pullup) |
+| **Button SELECT** | D7 | GPIO 13 | Menu Confirmation (Internal Pullup) |
+| **Button BACK** | D5 | GPIO 14 | Back / Cancel Option (Internal Pullup) |
+
+---
+
+## 🚀 Installation & Local Setup
+
+### Option A: Flashing the Pre-compiled Binary (Recommended)
+1. Navigate to the `Bin File` directory to locate `EVIL_TWINS_ESP8266.ino.bin`.
+2. Connect your NodeMCU or generic ESP8266 to your computer via micro-USB.
+3. Open **NodeMCU PyFlasher** (or use `esptool.py` via command line).
+4. Configure the following flash parameters:
+   - **Flash Mode:** `DIO`
+   - **Baud Rate:** `115200`
+   - **Flash Frequency:** `160MHz` (Required for handling captive portal web traffic smoothly)
+5. Select the bin file and click **Flash**.
+
+### Option B: Compiling from Source
+1. **Prerequisites:** Install [Arduino IDE](https://www.arduino.cc/en/software) or VS Code with the [PlatformIO Extension](https://platformio.org/).
+2. Add ESP8266 board support via the Boards Manager: `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
+3. Install the required libraries via Library Manager:
+   - `Adafruit SSD1306` (for the OLED)
+   - `Adafruit GFX Library`
+4. Open the source sketch directory (`EVIL_TWINS_ESP8266.ino`).
+5. Select **NodeMCU 1.0 (ESP-12E Module)**, choose your COM Port, compile, and upload.
+
+---
+
+## 📖 Operational Workflow
+
+1. **Booting up:** Connect power via USB. The OLED display initializes and prints a splash screen.
+2. **Scanning:** Use the physical buttons (or the Web Dashboard) to select `Scan Networks`. The system performs an asynchronous scan to record local SSIDs.
+3. **Cloning:** Select your target network from the generated list and press the `SELECT` button to launch the attack.
+4. **Baiting:** The ESP8266 starts a SoftAP with the same SSID name and redirects any client attempting to access the internet to the local security portal (`192.168.4.1`).
+5. **Admin Access:** You can access the management panel at any time by connecting to the AP and navigating to `http://192.168.4.1/menu` in your browser.
+6. **Capture:** When a user enters a password, the ESP8266 pauses the AP, connects to the authentic AP, and tests the credentials. Correct credentials stop the simulation and save the password directly to the EEPROM logs.
 
 ---
 
 ## ⚠️ Disclaimer
-
-**This tool is for EDUCATIONAL PURPOSES ONLY.** 
-Unauthorized access to computer systems or networks is illegal. The author (@chetanngavali) is not responsible for any misuse of this tool. Always ensure you have explicit, written permission before testing on any network you do not own.
-
----
-
-## 💎 6. Small Details & Optimizations
-
-To make the tool professional and robust, several "small features" were implemented:
-
-- **Smart Truncation**: SSIDs and passwords are automatically truncated on the OLED display to fit the 128px width without breaking the UI.
-- **Async Scanning**: Scanning doesn't block the main loop, allowing the OLED and Buttons to remain responsive.
-- **Edge-Detection Debouncing**: Buttons use a state-change guard (500ms) to prevent accidental double-clicks or menu jumping.
-- **EEPROM Integrity**: A magic-number style check ensures that logs are only read if the `logCount` is within valid bounds (0-20).
-- **Realistic Redirection**: The captive portal handles `onNotFound` requests, ensuring that no matter what URL the victim types (e.g., `google.com`), they always end up on the login page.
-- **Browser Compatibility**: The web interface uses standard CSS variables and minimal JS for compatibility across older and mobile browsers.
-- **State Change Guard**: A 500ms lockout after menu changes ensures the "Select" action on one menu doesn't accidentally trigger an action on the next menu.
+**This tool is strictly developed for educational and authorized network security testing purposes only.** 
+Unauthorized targeting, intercepting, or credential capturing on communication systems you do not own or lack written permission to audit is illegal. The author (@chetanngavali) and contributors assume no liability for misuse, damages, or violations of privacy laws resulting from using this software.
 
 ---
 
-### 👨‍💻 Developed By
-**Chetan Gavali**  
-GitHub: [@chetanngavali](https://github.com/chetanngavali)  
-Version: 5.0 Final
+## 🤝 Contributing
+Contributions make the open-source community an amazing place to learn, inspire, and create. Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on code styling, PR submissions, and setup details.
+
+---
+
+## 📄 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for the full license text.
+
+---
+
+## 👨‍💻 Maintainer & Contact
+Developed with 💎 by **Chetan Gavali**  
+- **GitHub:** [@chetanngavali](https://github.com/chetanngavali)  
+- **Issues:** [GitHub Issues Tracker](https://github.com/chetanngavali/EVIL_TWINS_ESP8266/issues)
