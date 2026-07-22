@@ -50,7 +50,7 @@ sequenceDiagram
     participant Target as Real Access Point
     participant EEPROM as EEPROM Storage
 
-    Victim->>ESP8266_AP: Connect to Cloned SSID
+    Victim->>ESP8266_AP: Connect to Cloned SSID 
     Victim->>DNS: Request google.com
     DNS->>Victim: Resolve to 192.168.4.1
     Victim->>Web: Request Portal Page
