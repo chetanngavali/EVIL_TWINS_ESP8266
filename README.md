@@ -44,7 +44,7 @@ This tool is designed for penetration testers, security educators, and students 
 
 | OLED Display (Physical UI) | Admin Dashboard (`/menu`) | Captive Portal (Victim View) |
 |:---:|:---:|:---:|
-| ![OLED Interface Placement](evil_twins.png) | *[Capture: Web Admin Menu Dashboard]* | *[Capture: Responsive Mobile Captive Portal]* |
+| ![OLED Interface Placement](evil_twins.png) | ![Admin Dashboard](admin%20dashboard.png) | ![Captive Portal](Captive%20Portal.png) |
 
 ---
 
